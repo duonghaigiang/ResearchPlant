@@ -6,26 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.constraintlayout.widget.Constraints
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/header_component"
+        android:background="@drawable/header"
         android:padding="10dp"
         app:layout_constraintBaseline_toTopOf="parent"
         >
         <TextView
-            android:id="@+id/helo"
+            android:id="@+id/hello"
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
-            android:text="hello"
+            android:text="Wellcome!!"
             android:textColor="@color/white"
             android:textSize="25sp"
-            app:layout_constrainStart_toStartOf="parent"
-            app:layout_constrainTop_toToptOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBaseline_toTopOf="parent"
             ></TextView>
         <TextView
             android:id="@+id/currentUser"
@@ -37,13 +37,22 @@
             android:textColor="@color/white"
             android:textSize="25sp"
             android:textStyle="bold"
-            app:layout_constrainStart_toEndOf="@+id/helo"
-            app:layout_constrainTop_toToptOf="parent"
-
+            app:layout_constraintStart_toEndOf="@id/hello"
+            app:layout_constraintTop_toTopOf="parent"
 
             ></TextView>
-
-    </androidx.constraintlayout.widget.Constraints>
+        <ImageView
+            android:id="@+id/imgMenu"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/ic_menu"
+            android:tint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/hello"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/hello"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 <!--<TextView-->
 <!--android:id="@+id/currentUser"-->
