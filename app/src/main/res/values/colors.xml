@@ -8,4 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="lavender">#8692f7</color>
+    <color name="primary">#2BCC6F</color>
+    <color name="primaryDark">#2BCC6F</color>
+    <color name="colorBackground">#EBEBEB</color>
 </resources>

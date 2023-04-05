@@ -6,15 +6,48 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/currentUser"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.Constraints
+        android:id="@+id/layoutHeader"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@drawable/header_component"
+        android:padding="10dp"
+        app:layout_constraintBaseline_toTopOf="parent"
+        >
+        <TextView
+            android:id="@+id/helo"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:text="hello"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            app:layout_constrainStart_toStartOf="parent"
+            app:layout_constrainTop_toToptOf="parent"
+            ></TextView>
+        <TextView
+            android:id="@+id/currentUser"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constrainStart_toEndOf="@+id/helo"
+            app:layout_constrainTop_toToptOf="parent"
 
 
+            ></TextView>
 
+    </androidx.constraintlayout.widget.Constraints>
 </androidx.constraintlayout.widget.ConstraintLayout>
+<!--<TextView-->
+<!--android:id="@+id/currentUser"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--app:layout_constraintStart_toStartOf="parent"-->
+<!--app:layout_constraintTop_toTopOf="parent" />-->
