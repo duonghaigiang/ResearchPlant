@@ -8,15 +8,16 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
-
+    private lateinit var username : TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        username = findViewById(R.id.username)
         val currentUser = Firebase.auth.currentUser // viết tắt của kotlin
-        val currentUserTextView = findViewById<TextView>(R.id.currentUser)
+        val currentUserTextView = username
         currentUser?.let {
-            currentUserTextView.text = it.email
+            currentUserTextView.text = it.displayName
         }
         // Sử dụng biến currentUser cho các tác vụ của bạn
     }
