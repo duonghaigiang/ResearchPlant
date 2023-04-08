@@ -1,24 +1,76 @@
 package com.example.plant
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Gravity
+import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
+import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.example.plant.Species
 
 class MainActivity : AppCompatActivity() {
     private lateinit var username : TextView
+    private lateinit var toggle : ActionBarDrawerToggle
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navView : NavigationView
+    private lateinit var layoutspecies : LinearLayout
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         username = findViewById(R.id.username)
+        drawerLayout = findViewById(R.id.drawerLayout)
+        navView = findViewById(R.id.nav_view)
+        layoutspecies = findViewById(R.id.layoutspecies)
+
+        val user = FirebaseAuth.getInstance()
+
         val currentUser = Firebase.auth.currentUser // viết tắt của kotlin
         val currentUserTextView = username
         currentUser?.let {
             currentUserTextView.text = it.displayName
         }
-        // Sử dụng biến currentUser cho các tác vụ của bạn
+
+        // toggle bar
+        toggle = ActionBarDrawerToggle(this ,drawerLayout, R.string.open, R.string.close)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        navView.setNavigationItemSelectedListener {
+            when(it.itemId)
+            {
+                R.id.nav_logout -> {user.signOut()
+                    startActivity(Intent(this@MainActivity, LoginAction::class.java))
+                }
+            }
+            true
+        }
+
+        //species
+        layoutspecies.setOnClickListener{
+            Toast.makeText(this, "click", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(toggle.onOptionsItemSelected(item))
+        {
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

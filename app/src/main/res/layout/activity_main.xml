@@ -29,7 +29,7 @@
             android:textColor="@color/white"
             android:textSize="25sp"
             app:layout_constraintBaseline_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"></TextView>
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/username"
@@ -43,15 +43,7 @@
             app:layout_constraintStart_toEndOf="@+id/hello"
             app:layout_constraintTop_toTopOf="parent"></TextView>
 
-        <ImageView
-            android:id="@+id/imgMenu"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="15dp"
-            android:src="@drawable/ic_menu"
-            app:layout_constraintBottom_toBottomOf="@id/hello"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/hello" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -63,7 +55,7 @@
             android:background="@drawable/bock_retangle_white"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imgMenu">
+            app:layout_constraintTop_toBottomOf="@id/hello">
 
             <EditText
                 android:layout_width="0dp"
@@ -72,7 +64,6 @@
                 android:background="@null"
                 android:hint="Research plant"
                 android:imeOptions="actionSearch"
-                android:importantForAutofill="no"
                 android:paddingStart="15dp"
                 android:textColor="@color/black"
                 android:textSize="16sp"></EditText>
@@ -124,7 +115,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="@string/app_name"
+                        android:text="Species"
                         android:textSize="20sp"
                         android:textStyle="bold">
 
@@ -162,13 +153,25 @@
                     </TextView>
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </ScrollView>
 
-
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:menu="@menu/nav_menu"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true">
+        </com.google.android.material.navigation.NavigationView>
+    </androidx.drawerlayout.widget.DrawerLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
-<!--<TextView-->
-<!--android:id="@+id/currentUser"-->
-<!--android:layout_width="wrap_content"-->
-<!--android:layout_height="wrap_content"-->
-<!--app:layout_constraintStart_toStartOf="parent"-->
-<!--app:layout_constraintTop_toTopOf="parent" />-->
+
