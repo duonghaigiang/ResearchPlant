@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".SignUpAction"
     android:orientation="vertical"
+    android:background="@drawable/top_background1"
     android:gravity="center">
 <androidx.cardview.widget.CardView
     android:layout_width="match_parent"
@@ -24,26 +25,27 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="sign up"
+            android:text="Sign up"
             android:textSize="36sp"
             android:textStyle="bold"
             android:textColor="@color/lavender"></TextView>
 
         <EditText
             android:id="@+id/signUPEmail"
-            android:layout_width="309dp"
+            android:layout_width="292dp"
             android:layout_height="50dp"
             android:layout_marginTop="40dp"
             android:layout_marginRight="40dp"
             android:background="@drawable/text_filed"
-            android:drawableLeft="@drawable/ic_baseline_supervised_user_circle_24"
+            android:drawableLeft="@drawable/ic_baseline_contact_mail_24"
             android:hint="Email"
             android:padding="8dp"
             android:textColor="@color/black"
-            android:textSize="36sp"></EditText>
+            android:textSize="24sp"></EditText>
+
         <EditText
             android:id="@+id/name"
-            android:layout_width="308dp"
+            android:layout_width="292dp"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="40dp"
@@ -52,11 +54,11 @@
             android:hint="Your name"
             android:padding="8dp"
             android:textColor="@color/black"
-            android:textSize="36sp"></EditText>
+            android:textSize="24sp"></EditText>
 
         <EditText
             android:id="@+id/signUpPassword"
-            android:layout_width="308dp"
+            android:layout_width="291dp"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="40dp"
@@ -65,11 +67,11 @@
             android:hint="PassWord"
             android:padding="8dp"
             android:textColor="@color/black"
-            android:textSize="36sp"></EditText>
+            android:textSize="24sp"></EditText>
 
         <EditText
             android:id="@+id/confirmSignUpPassword"
-            android:layout_width="306dp"
+            android:layout_width="291dp"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="40dp"
@@ -78,7 +80,7 @@
             android:hint="comfirm password"
             android:padding="8dp"
             android:textColor="@color/black"
-            android:textSize="36sp"></EditText>
+            android:textSize="24sp"></EditText>
         <Button
             android:layout_width="match_parent"
             android:layout_height="60dp"

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginAction"
+    android:background="@drawable/top_background1"
     android:orientation="vertical"
     android:gravity="center">
     <androidx.cardview.widget.CardView
@@ -28,32 +29,32 @@
                 android:textSize="36sp"
                 android:textStyle="bold"
                 android:textColor="@color/lavender"></TextView>
+
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:textSize="36sp"
                 android:id="@+id/loginEmail"
-                android:background="@drawable/text_filed"
-                android:layout_marginRight="40dp"
-                android:layout_marginTop="40dp"
-                android:padding="8dp"
-                android:hint="Email"
-                android:drawableLeft="@drawable/ic_baseline_supervised_user_circle_24"
-                android:textColor="@color/black"
-                ></EditText>
-            <EditText
-                android:layout_width="match_parent"
+                android:layout_width="298dp"
                 android:layout_height="50dp"
-                android:textSize="36sp"
-                android:id="@+id/login_passWord"
-                android:background="@drawable/text_filed"
+                android:layout_marginTop="40dp"
                 android:layout_marginRight="40dp"
-                android:layout_marginTop="20dp"
+                android:background="@drawable/text_filed"
+                android:drawableLeft="@drawable/ic_baseline_contact_mail_24"
+                android:hint="Email"
                 android:padding="8dp"
-                android:hint="PassWord"
-                android:drawableLeft="@drawable/ic_baseline_lock_24"
                 android:textColor="@color/black"
-                ></EditText>
+                android:textSize="24sp"></EditText>
+
+            <EditText
+                android:id="@+id/login_passWord"
+                android:layout_width="299dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="40dp"
+                android:background="@drawable/text_filed"
+                android:drawableLeft="@drawable/ic_baseline_lock_24"
+                android:hint="PassWord"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:textSize="24sp"></EditText>
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="60dp"

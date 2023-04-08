@@ -22,6 +22,7 @@ import com.example.plant.Species
 
 class MainActivity : AppCompatActivity() {
     private lateinit var username : TextView
+
     private lateinit var toggle : ActionBarDrawerToggle
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navView : NavigationView
@@ -56,13 +57,17 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_logout -> {user.signOut()
                     startActivity(Intent(this@MainActivity, LoginAction::class.java))
                 }
+                R.id.nav_infor -> {
+                    startActivity(Intent(this@MainActivity, ProfileActivity::class.java))
+                }
             }
             true
         }
 
         //species
-        layoutspecies.setOnClickListener{
-            Toast.makeText(this, "click", Toast.LENGTH_SHORT).show()
+        layoutspecies.setOnClickListener {
+            val intent = Intent(this@MainActivity, Species::class.java)
+            startActivity(intent)
         }
     }
 
