@@ -61,12 +61,12 @@
                 app:cardBackgroundColor="@color/white">
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/avatar"
                     android:layout_width="65dp"
                     android:layout_height="64dp"
                     android:layout_marginEnd="4dp"
                     android:scaleType="centerCrop"
-                    tools:srcCompat="@tools:sample/avatars" />
+                     />
 
                 <LinearLayout
                     android:layout_width="match_parent"
