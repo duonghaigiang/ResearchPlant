@@ -82,86 +82,133 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:id="@+id/scrollView2"
+            android:layout_width="392dp"
+            android:layout_height="187dp"
             android:overScrollMode="never"
             android:scrollbars="none"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layoutHeader">
-            <androidx.constraintlayout.widget.ConstraintLayout
+
+            <LinearLayout
+                android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
-                <LinearLayout
-                    android:id="@+id/layoutspecies"
-                    android:layout_width="0dp"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp"
-                    android:background="@drawable/bock_retangle_white"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="15dp"
 
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:nestedScrollingEnabled="true"
-
-                    app:layout_constraintDimensionRatio="H, 1:1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     >
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_margin="8dp"
-                        android:contentDescription="@string/app_name"
-                        android:padding="8dp"
-                        android:src="@drawable/plant"
-                        ></ImageView>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="Species"
-                        android:textSize="20sp"
-                        android:textStyle="bold">
 
-                    </TextView>
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/layoutArticles"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp"
-                    android:background="@drawable/bock_retangle_white"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="15dp"
-                    app:layout_constraintDimensionRatio="H, 1:1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    >
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_margin="8dp"
-                        android:contentDescription="@string/app_name"
-                        android:padding="8dp"
-                        android:src="@drawable/articles"
-                        ></ImageView>
-                    <TextView
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:id="@+id/layoutspecies"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="22dp"
+                        android:background="@drawable/bock_retangle_white"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:gravity="center"
-                        android:text="Articles"
-                        android:textSize="20sp"
-                        android:textStyle="bold">
 
-                    </TextView>
-                </LinearLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:nestedScrollingEnabled="true"
+                        android:orientation="vertical"
+                        android:padding="15dp"
+
+                        app:layout_constraintDimensionRatio="H, 1:1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_margin="8dp"
+                            android:contentDescription="@string/app_name"
+                            android:padding="8dp"
+                            android:src="@drawable/plant"></ImageView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Species"
+                            android:textSize="20sp"
+                            android:textStyle="bold">
+
+                        </TextView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutArticles"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="22dp"
+                        android:background="@drawable/bock_retangle_white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="15dp"
+                        app:layout_constraintDimensionRatio="H, 1:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_margin="8dp"
+                            android:contentDescription="@string/app_name"
+                            android:padding="8dp"
+                            android:src="@drawable/articles"></ImageView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Articles"
+                            android:textSize="20sp"
+                            android:textStyle="bold">
+
+                        </TextView>
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </LinearLayout>
 
         </ScrollView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/footer"
+            android:layout_width="415dp"
+            android:layout_height="60dp"
+            android:background="@drawable/footer"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+            app:layout_constraintVertical_bias="1.0">
+
+            <TextView
+                android:id="@+id/footerText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2023"
+
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.666" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

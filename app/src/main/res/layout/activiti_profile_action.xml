@@ -137,7 +137,7 @@
             app:layout_constraintTop_toBottomOf="@+id/btn_avatar" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/changePassword"
             android:layout_width="159dp"
             android:layout_height="26dp"
             android:layout_marginStart="24dp"
@@ -151,7 +151,7 @@
 
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnLogout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -160,7 +160,7 @@
             android:text="Logout"
             app:icon="@drawable/ic_baseline_west_24"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+            app:layout_constraintTop_toBottomOf="@+id/changePassword" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -182,7 +182,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.837"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button2" />
+            app:layout_constraintTop_toBottomOf="@+id/btnLogout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.drawerlayout.widget.DrawerLayout>
