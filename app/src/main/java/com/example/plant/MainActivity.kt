@@ -19,32 +19,51 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.example.plant.Species
+import android.util.Log
+import com.google.firebase.firestore.FirebaseFirestore
+import org.checkerframework.checker.units.qual.A
 
 class MainActivity : AppCompatActivity() {
     private lateinit var username : TextView
-
+    private val TAG = "MyActivity"
     private lateinit var toggle : ActionBarDrawerToggle
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navView : NavigationView
     private lateinit var layoutspecies : LinearLayout
+
+    private lateinit var layoutArticles : LinearLayout
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        username = findViewById(R.id.username)
-        drawerLayout = findViewById(R.id.drawerLayout)
-        navView = findViewById(R.id.nav_view)
-        layoutspecies = findViewById(R.id.layoutspecies)
+        mapping()
 
         val user = FirebaseAuth.getInstance()
 
         val currentUser = Firebase.auth.currentUser // viết tắt của kotlin
+
         val currentUserTextView = username
         currentUser?.let {
             currentUserTextView.text = it.displayName
         }
+
+
+//        readFS(currentUser?.uid)
+//        { data ->
+//            if (data != null) {
+//                val displayName = data["displayName"] as String?
+//                if (displayName != null) {
+//                    currentUserTextView.text = displayName
+//                }
+//            }
+//            else
+//            {
+//            }
+//
+//        }
 
         // toggle bar
         toggle = ActionBarDrawerToggle(this ,drawerLayout, R.string.open, R.string.close)
@@ -69,6 +88,11 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, Species::class.java)
             startActivity(intent)
         }
+        //Articles
+        layoutArticles.setOnClickListener {
+            val intent = Intent(this@MainActivity, ArticlesAction::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -77,5 +101,35 @@ class MainActivity : AppCompatActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+    private fun mapping()
+    {
+        username = findViewById(R.id.username)
+        layoutArticles = findViewById(R.id.layoutArticles)
+        drawerLayout = findViewById(R.id.drawerLayout)
+        navView = findViewById(R.id.nav_view)
+        layoutspecies = findViewById(R.id.layoutspecies)
+    }
+    private fun readFS(uid :String?,callback: (Map<String, Any>?) -> Unit)
+    {
+       if(uid != null)
+       {
+           val db = FirebaseFirestore.getInstance()
+           db.collection("users").document(uid)
+               .get()
+               .addOnSuccessListener { documentSnapshot ->
+                   if (documentSnapshot.exists()) {
+                       // Dữ liệu tài liệu được lưu trong documentSnapshot
+                       val data = documentSnapshot.data
+
+                   } else {
+                       // Tài liệu không tồn tại
+                   }
+               }
+               .addOnFailureListener { exception ->
+                   // Xử lý lỗi
+               }
+       }
+
     }
 }

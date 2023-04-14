@@ -36,13 +36,7 @@ class SignUpAction : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up_action)
 
-        login = findViewById(R.id.login)
-        signUpButton = findViewById(R.id.signUpButton)
-        forget = findViewById(R.id.forget)
-        signUPEmail = findViewById(R.id.signUPEmail)
-        signUpPassword = findViewById(R.id.signUpPassword)
-        confirmSignUpPassword = findViewById(R.id.confirmSignUpPassword)
-        name = findViewById(R.id.name)
+        mapping()
 
         firebaseAuth = FirebaseAuth.getInstance()
         forget.setOnClickListener{
@@ -119,7 +113,16 @@ class SignUpAction : AppCompatActivity() {
             Toast.makeText(this@SignUpAction, "please fill in", Toast.LENGTH_SHORT).show()
         }
     }
-
+    private fun mapping()
+    {
+        login = findViewById(R.id.login)
+        signUpButton = findViewById(R.id.signUpButton)
+        forget = findViewById(R.id.forget)
+        signUPEmail = findViewById(R.id.signUPEmail)
+        signUpPassword = findViewById(R.id.signUpPassword)
+        confirmSignUpPassword = findViewById(R.id.confirmSignUpPassword)
+        name = findViewById(R.id.name)
+    }
     private fun navi() {
         val intent = Intent(this, LoginAction::class.java) // navi
         startActivity(intent)

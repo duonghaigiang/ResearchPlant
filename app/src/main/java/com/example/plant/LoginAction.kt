@@ -21,43 +21,12 @@ class LoginAction : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_action)
 
-        signUp = findViewById(R.id.signUp)
-        loginEmail = findViewById(R.id.loginEmail)
-        login_passWord = findViewById(R.id.login_passWord)
-        loginButton = findViewById(R.id.loginButton)
-        changePassword = findViewById(R.id.changePassword)
+
+        mapping()
 
         firebaseAuth = FirebaseAuth.getInstance()
         loginButton.setOnClickListener {
-            var email =loginEmail.text.toString()
-            var password =login_passWord.text.toString()
-            if(email.isNotEmpty() && password.isNotEmpty())
-            {
-                if(email.contains("@") && password.length > 0)
-                {
-                    firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
-                        if(it.isSuccessful)
-                        {
-                            var intent =Intent(this, MainActivity::class.java) //navi
-                            startActivity(intent)
-                        }
-                        else
-                        {
-                            Toast.makeText(this@LoginAction, it.exception.toString(), Toast.LENGTH_SHORT).show()
-
-                        }
-                    }
-                }
-                else
-                {
-                    Toast.makeText(this, "please filll in", Toast.LENGTH_SHORT).show()
-                }
-            }
-            else
-            {
-                Toast.makeText(this, "please filll in", Toast.LENGTH_SHORT).show()
-            }
-
+            login()
         }
 
         signUp.setOnClickListener {
@@ -67,5 +36,44 @@ class LoginAction : AppCompatActivity() {
             startActivity(Intent(this@LoginAction, ForgotPasswordAction::class.java))
         }
 
+    }
+    private fun login()
+    {
+        var email =loginEmail.text.toString()
+        var password =login_passWord.text.toString()
+        if(email.isNotEmpty() && password.isNotEmpty())
+        {
+            if(email.contains("@") && password.length > 0)
+            {
+                firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
+                    if(it.isSuccessful)
+                    {
+                        var intent =Intent(this, MainActivity::class.java) //navi
+                        startActivity(intent)
+                    }
+                    else
+                    {
+                        Toast.makeText(this@LoginAction, it.exception.toString(), Toast.LENGTH_SHORT).show()
+
+                    }
+                }
+            }
+            else
+            {
+                Toast.makeText(this, "please filll in", Toast.LENGTH_SHORT).show()
+            }
+        }
+        else
+        {
+            Toast.makeText(this, "please filll in", Toast.LENGTH_SHORT).show()
+        }
+    }
+    private fun mapping()
+    {
+        signUp = findViewById(R.id.signUp)
+        loginEmail = findViewById(R.id.loginEmail)
+        login_passWord = findViewById(R.id.login_passWord)
+        loginButton = findViewById(R.id.loginButton)
+        changePassword = findViewById(R.id.changePassword)
     }
 }

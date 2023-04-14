@@ -36,7 +36,7 @@ class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activiti_profile_action)
-
+        mapping()
         getImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
                 val imageUri = result.data?.data
@@ -45,13 +45,7 @@ class ProfileActivity : AppCompatActivity() {
                 }
             }
         }
-        username = findViewById(R.id.nameuser)
-        emailUser = findViewById(R.id.emailUser)
-        btnHome = findViewById(R.id.btnHome)
-        btnLogout = findViewById(R.id.btnLogout)
-        btn_avatar = findViewById(R.id.btn_avatar)
-        changePassword = findViewById(R.id.changePassword)
-        avatar = findViewById(R.id.avatar)
+
 
         val currentUser = Firebase.auth.currentUser // viết tắt của kotlin
         val user = FirebaseAuth.getInstance()
@@ -143,6 +137,16 @@ class ProfileActivity : AppCompatActivity() {
                     Toast.makeText(this, "Error loading avatar: $e", Toast.LENGTH_SHORT).show()
                 }
         }
+    }
+    private fun mapping()
+    {
+        username = findViewById(R.id.nameuser)
+        emailUser = findViewById(R.id.emailUser)
+        btnHome = findViewById(R.id.btnHome)
+        btnLogout = findViewById(R.id.btnLogout)
+        btn_avatar = findViewById(R.id.btn_avatar)
+        changePassword = findViewById(R.id.changePassword)
+        avatar = findViewById(R.id.avatar)
     }
 
 }
