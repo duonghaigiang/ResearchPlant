@@ -13,6 +13,9 @@ class LoginAction : AppCompatActivity() {
     private lateinit var loginEmail: TextView
     private lateinit var login_passWord: TextView
     private lateinit var loginButton: Button
+
+    private lateinit var changePassword: TextView
+
     private lateinit var firebaseAuth: FirebaseAuth  //auth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +25,8 @@ class LoginAction : AppCompatActivity() {
         loginEmail = findViewById(R.id.loginEmail)
         login_passWord = findViewById(R.id.login_passWord)
         loginButton = findViewById(R.id.loginButton)
+        changePassword = findViewById(R.id.changePassword)
+
         firebaseAuth = FirebaseAuth.getInstance()
         loginButton.setOnClickListener {
             var email =loginEmail.text.toString()
@@ -58,5 +63,9 @@ class LoginAction : AppCompatActivity() {
         signUp.setOnClickListener {
             startActivity(Intent(this@LoginAction, SignUpAction::class.java))
         }
+        changePassword.setOnClickListener {
+            startActivity(Intent(this@LoginAction, ForgotPasswordAction::class.java))
+        }
+
     }
 }

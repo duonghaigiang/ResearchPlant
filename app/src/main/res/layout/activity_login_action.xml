@@ -34,14 +34,13 @@
                 android:id="@+id/loginEmail"
                 android:layout_width="298dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="40dp"
                 android:layout_marginRight="40dp"
                 android:background="@drawable/text_filed"
                 android:drawableLeft="@drawable/ic_baseline_contact_mail_24"
                 android:hint="Email"
                 android:padding="8dp"
                 android:textColor="@color/black"
-                android:textSize="24sp"></EditText>
+                android:textSize="18dp"></EditText>
 
             <EditText
                 android:id="@+id/login_passWord"
@@ -54,7 +53,7 @@
                 android:hint="PassWord"
                 android:padding="8dp"
                 android:textColor="@color/black"
-                android:textSize="24sp"></EditText>
+                android:textSize="18dp"></EditText>
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -65,15 +64,25 @@
                 android:backgroundTint="@color/lavender"
                 app:cornerRadius = "20dp"
                 ></Button>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/signUp"
-                android:text="you dont have acount"
-                android:layout_gravity="center"
-                android:padding="8dp"
-                android:layout_marginTop="10dp"
-                android:textSize="18sp"></TextView>
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:id="@+id/signUp"
+                   android:text="you dont have acount"
+                   android:layout_gravity="center"
+                   android:padding="8dp"
+                   android:layout_marginTop="10dp"
+                   android:textSize="18sp"></TextView>
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:id="@+id/changePassword"
+                   android:text="Forgot Password"
+                   android:layout_gravity="center"
+                   android:padding="8dp"
+                   android:layout_marginTop="10dp"
+                   android:textSize="18sp"></TextView>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

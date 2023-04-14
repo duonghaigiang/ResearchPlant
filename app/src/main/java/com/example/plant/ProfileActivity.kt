@@ -97,7 +97,6 @@ class ProfileActivity : AppCompatActivity() {
                                 "photoURL" to downloadUri.toString()
                             )
 
-
                             db.collection("users").document(currentUser.uid)
                                 .update(userHashMap as Map<String, Any>)
                                 .addOnSuccessListener {
@@ -105,10 +104,7 @@ class ProfileActivity : AppCompatActivity() {
                                     Glide.with(this@ProfileActivity)
                                         .load(downloadUri) // hiện avatar vừa nhập
                                         .into(avatar)
-
-
                                     Toast.makeText(this@ProfileActivity, "Avatar URL updated in Firestore.", Toast.LENGTH_SHORT).show()
-
                                 }
 
                                 .addOnFailureListener { exception ->
