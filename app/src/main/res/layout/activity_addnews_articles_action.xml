@@ -74,7 +74,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="News Articles "
-                        android:textSize="36sp"
+                        android:textSize="30sp"
                         android:textStyle="bold"
                         android:textColor="@color/lavender"></TextView>
 
@@ -108,10 +108,11 @@
                         android:orientation="horizontal"
                         android:background="@color/grey"
                         android:layout_marginTop="14dp"
+
                         >
 
                         <ImageView
-                            android:id="@+id/avatar"
+                            android:id="@+id/img"
                             android:layout_width="match_parent"
                             android:layout_height="150dp"
                             android:layout_marginEnd="4dp"
@@ -123,7 +124,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:text="Add news"
-                        android:id="@+id/loginButton"
+                        android:id="@+id/btnAddNews"
                         android:textSize="18sp"
                         android:layout_marginTop="30dp"
                         android:backgroundTint="@color/lavender"
@@ -150,11 +151,11 @@
             app:layout_constraintVertical_bias="1.0">
 
             <TextView
-                android:id="@+id/footerText"
+                android:id="@+id/home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2023"
-
+                android:text="HOME"
+                android:drawableLeft="@drawable/ic_baseline_home_24"
                 android:textColor="@android:color/white"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
