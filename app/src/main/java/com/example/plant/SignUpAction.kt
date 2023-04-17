@@ -124,7 +124,7 @@ class SignUpAction : AppCompatActivity() {
         name = findViewById(R.id.name)
     }
     private fun navi() {
-        val intent = Intent(this, LoginAction::class.java) // navi
+        val intent = Intent(this@SignUpAction, LoginAction::class.java) // navi
         startActivity(intent)
     }
 
