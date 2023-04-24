@@ -140,7 +140,5 @@ class AddNewsArticlesAction : AppCompatActivity() {
         description = findViewById(R.id.Description)
         btnAddNews = findViewById(R.id.btnAddNews)
         img = findViewById(R.id.img)
-
-
     }
 }

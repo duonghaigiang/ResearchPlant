@@ -50,6 +50,9 @@
         <activity
             android:name=".AddNewsArticlesAction"
             />
+        <activity
+            android:name=".DetailArticle_Action"
+            />
 
     </application>
 

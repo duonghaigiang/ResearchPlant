@@ -10,9 +10,19 @@ import android.content.Context;
 import android.view.View;
 import android.text.format.DateFormat
 
-class ArticleAdapter(private val articles: List<Article>, private val context: Context) :
-    RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
 
+//Tạo một interface cho việc xử lý sự kiện nhấp chuột vào một bài viết trong ArticleAdapter:
+
+
+//Thêm một tham số onArticleClickListener cho ArticleAdapter:
+class ArticleAdapter(private val articles: List<Article>,
+                     private val context: Context ,
+                     private val onArticleClickListener: OnArticleClickListener
+                     ) :
+    RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
+    interface OnArticleClickListener {
+        fun onArticleClick(article: Article)
+    }
     class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val authorTextView: TextView = itemView.findViewById(R.id.articleAuthor)
         val titleTextView: TextView = itemView.findViewById(R.id.articleTitle)
@@ -27,16 +37,24 @@ class ArticleAdapter(private val articles: List<Article>, private val context: C
         return ArticleViewHolder(view)
     }
 
+
+    //Đặt sự kiện nhấp chuột cho itemView trong onBindViewHolder
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article = articles[position]
         holder.authorTextView.text = article.author
-        holder.titleTextView.text = article.title
-        holder.descriptionTextView.text = article.description
-        Glide.with(context)
-            .load(article.imageUrl)
-            .into(holder.imageView)
-        holder.timestampTextView.text = DateFormat.format("dd/MM/yyyy", article.timestamp.toDate())
+            holder.titleTextView.text = article.title
+            holder.descriptionTextView.text = article.description
+            Glide.with(context)
+                .load(article.imageUrl)
+                .into(holder.imageView)
+            holder.timestampTextView.text = DateFormat.format("dd/MM/yyyy", article.createdAt.toDate())
+
+            // sự kiện Click tại mỗi item
+            holder.itemView.setOnClickListener {
+                onArticleClickListener.onArticleClick(article)
+        }
     }
+
 
     override fun getItemCount(): Int {
         return articles.size

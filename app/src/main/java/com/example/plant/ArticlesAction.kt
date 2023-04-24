@@ -12,7 +12,7 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class ArticlesAction : AppCompatActivity() {
+class ArticlesAction : AppCompatActivity(), ArticleAdapter.OnArticleClickListener{
     private lateinit var articlesRecyclerView: RecyclerView
     private lateinit var articleAdapter: ArticleAdapter
     private val articleList: MutableList<Article> = mutableListOf()
@@ -34,8 +34,9 @@ class ArticlesAction : AppCompatActivity() {
                             val title = document.getString("title") ?: ""
                             val description = document.getString("description") ?: ""
                             val imageUrl = document.getString("imgURL") ?: ""
-                            val timestamp = document.getTimestamp("timestamp") ?: Timestamp.now()
-                            val article = Article(author, title, description, imageUrl, timestamp)
+                            val createdAt = document.getTimestamp("createdAt") ?: Timestamp.now()
+                            val avatar = userDocument.getString("photoURL") ?: ""
+                            val article = Article(avatar, author, title, description, imageUrl, createdAt  )
                             articleList.add(article)
                             articleAdapter.notifyDataSetChanged()
                         }
@@ -53,8 +54,7 @@ class ArticlesAction : AppCompatActivity() {
         // Initialize the RecyclerView, LinearLayoutManager, and ArticleAdapter
         articlesRecyclerView = findViewById(R.id.articlesRecyclerView)
         val layoutManager = LinearLayoutManager(this)
-        articleAdapter = ArticleAdapter(articleList, this)
-
+        articleAdapter = ArticleAdapter(articleList, this, this)
         // Set up the RecyclerView with the adapter and layout manager
         articlesRecyclerView.adapter = articleAdapter
         articlesRecyclerView.layoutManager = layoutManager
@@ -70,4 +70,10 @@ class ArticlesAction : AppCompatActivity() {
     {
         addnews = findViewById(R.id.addnews)
     }
+    override fun onArticleClick(article: Article) {
+        val intent = Intent(this, DetailArticle_Action::class.java)
+        intent.putExtra("article", article)
+        startActivity(intent)
+    }
+
 }
