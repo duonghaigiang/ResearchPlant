@@ -6,15 +6,12 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.MediaStore
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import android.graphics.Bitmap
 import android.net.Uri
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import com.bumptech.glide.Glide
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
@@ -25,6 +22,8 @@ import com.google.firebase.storage.ktx.storage
 import java.io.ByteArrayOutputStream
 
 class AddNewSpeciesAction : AppCompatActivity() {
+    private lateinit var speciesSpinner: Spinner
+    private val speciesList = ArrayList<String>()
     private lateinit var titleNews : EditText
     private lateinit var Description : EditText
     private lateinit var img : ImageView
@@ -37,6 +36,7 @@ class AddNewSpeciesAction : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_addnewspeces)
         mapping()
+        populateSpeciesSpinner()
         img.setOnClickListener {
             openCamera()
         }
@@ -163,9 +163,24 @@ class AddNewSpeciesAction : AppCompatActivity() {
             Glide.with(this).load(imageUri).into(img)
         }
     }
-
+    private fun populateSpeciesSpinner() {
+        db.collection("species").get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    val speciesName = document.getString("name") // Thay "name" bằng tên trường chứa tên của loài trong Firestore
+                    speciesName?.let { speciesList.add(it) }
+                }
+                val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, speciesList)
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                speciesSpinner.adapter = adapter
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Error getting documents: $exception", Toast.LENGTH_SHORT).show()
+            }
+    }
     private fun mapping()
     {
+        speciesSpinner = findViewById(R.id.speciesSpinner)
         img = findViewById(R.id.img)
         Description = findViewById(R.id.Description)
         titleNews = findViewById(R.id.titleNews)

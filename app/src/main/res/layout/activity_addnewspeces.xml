@@ -28,37 +28,7 @@
             app:layout_constraintBaseline_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/bock_retangle_white"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/hello"
-            tools:layout_editor_absoluteX="25dp">
 
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:hint="Research plant"
-                android:imeOptions="actionSearch"
-                android:paddingStart="15dp"
-                android:textColor="@color/black"
-                android:textSize="16sp"></EditText>
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/search_icon"
-                android:contentDescription="@string/app_name"
-                android:padding="6dp"
-                android:src="@drawable/ic_baseline_search_24"></ImageView>
-        </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -95,13 +65,17 @@
                     android:textColor="@color/lavender"
                     android:textSize="30sp"
                     android:textStyle="bold"></TextView>
-
+                <Spinner
+                    android:id="@+id/speciesSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
                 <EditText
                     android:id="@+id/titleNews"
                     android:layout_width="298dp"
                     android:layout_height="50dp"
                     android:layout_marginRight="40dp"
                     android:background="@drawable/text_filed"
+                    android:layout_marginTop="12dp"
 
                     android:hint="Species"
                     android:padding="8dp"
