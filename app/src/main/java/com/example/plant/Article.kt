@@ -3,8 +3,6 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 import com.google.firebase.Timestamp;
-
-
 @Parcelize
 data class Article(
     val avatar : String,

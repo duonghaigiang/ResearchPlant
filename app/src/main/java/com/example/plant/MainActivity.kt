@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navView : NavigationView
     private lateinit var layoutspecies : LinearLayout
 
+
     private lateinit var layoutArticles : LinearLayout
 
 
@@ -85,7 +86,7 @@ class MainActivity : AppCompatActivity() {
 
         //species
         layoutspecies.setOnClickListener {
-            val intent = Intent(this@MainActivity, Species::class.java)
+            val intent = Intent(this@MainActivity, SpeciesAction::class.java)
             startActivity(intent)
         }
         //Articles
@@ -93,6 +94,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, ArticlesAction::class.java)
             startActivity(intent)
         }
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
