@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
-            android:text="Add new Species"
+            android:text="Plants"
             android:textColor="@color/white"
             android:textSize="25sp"
             app:layout_constraintBaseline_toTopOf="parent"
@@ -39,7 +39,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/hello"
             tools:layout_editor_absoluteX="25dp">
-
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -62,7 +61,11 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/speciesRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutHeader" />
 </androidx.constraintlayout.widget.ConstraintLayout>

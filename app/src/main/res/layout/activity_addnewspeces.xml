@@ -69,18 +69,7 @@
                     android:id="@+id/speciesSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
-                <EditText
-                    android:id="@+id/titleNews"
-                    android:layout_width="298dp"
-                    android:layout_height="50dp"
-                    android:layout_marginRight="40dp"
-                    android:background="@drawable/text_filed"
-                    android:layout_marginTop="12dp"
 
-                    android:hint="Species"
-                    android:padding="8dp"
-                    android:textColor="@color/black"
-                    android:textSize="18dp"></EditText>
                 <EditText
                     android:id="@+id/name"
                     android:layout_width="298dp"

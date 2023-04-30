@@ -24,7 +24,7 @@ import java.io.ByteArrayOutputStream
 class AddNewSpeciesAction : AppCompatActivity() {
     private lateinit var speciesSpinner: Spinner
     private val speciesList = ArrayList<String>()
-    private lateinit var titleNews : EditText
+    private lateinit var name : EditText
     private lateinit var Description : EditText
     private lateinit var img : ImageView
     private lateinit var btnAddNews : Button
@@ -41,29 +41,29 @@ class AddNewSpeciesAction : AppCompatActivity() {
             openCamera()
         }
         btnAddNews.setOnClickListener{
-            createSpecies()
+            createPlants()
         }
 
     }
-    private fun uploadImgSpecies(uri: Uri, articleId: String) {
+    private fun uploadImgSpecies(uri: Uri, plants: String) {
         val currentUser = FirebaseAuth.getInstance().currentUser
         currentUser?.let { user ->
             val storage = Firebase.storage
             val storageRef = storage.reference
-            val imgArticles = storageRef.child("imgArticles/$articleId.jpg")
+            val imgArticles = storageRef.child("Plants/$plants.jpg")
 
             val uploadTask = imgArticles.putFile(uri)
             uploadTask.addOnSuccessListener { taskSnapshot ->
                 imgArticles.downloadUrl.addOnSuccessListener { downloadUri ->
                     // Cập nhật đường dẫn ảnh trong tài liệu có ID bài viết cụ thể
-                    db.collection("articles")
-                        .document(articleId)
+                    db.collection("plants")
+                        .document(plants)
                         .update("imgURL", downloadUri.toString())
                         .addOnSuccessListener {
                             Glide.with(this)
                                 .load(downloadUri)
                                 .into(img)
-                            Toast.makeText(this, "Ảnh đã được cập nhật trong Firestore.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Ảnh đã được cập nhật ", Toast.LENGTH_SHORT).show()
                         }
                         .addOnFailureListener { exception ->
                             Toast.makeText(this, "Không thể cập nhật ảnh trong Firestore: $exception", Toast.LENGTH_SHORT).show()
@@ -78,28 +78,32 @@ class AddNewSpeciesAction : AppCompatActivity() {
             Toast.makeText(this, "Người dùng chưa đăng nhập", Toast.LENGTH_SHORT).show()
         }
     }
-    private fun createSpecies(){
-        val title = titleNews.text.toString()
+    private fun createPlants(){
+        val name = name.text.toString()
         val description = Description.text.toString()
+        val author = Firebase.auth.currentUser?.displayName
         val userId = Firebase.auth.currentUser?.uid
         val currentTime = Timestamp.now()
+        val speciesId = speciesSpinner.selectedItem.toString()
         if (title.isEmpty() || description.isEmpty()) {
             Toast.makeText(this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show()
             return
         }
-        val species = hashMapOf(
+        val plants = hashMapOf(
             "uid" to userId,
-            "title" to title,
+            "author" to author,
+            "speciesId" to speciesId,
+            "name" to name,
             "description" to description,
             "imgURL" to "",
             "likes" to arrayListOf<String>(),
             "createdAt" to currentTime,
             "updatedAt" to currentTime
         )
-        db.collection("species")
-            .add(species)
+        db.collection("plants")
+            .add(plants)
             .addOnSuccessListener { documentReference ->
-                Toast.makeText(this, "Bài viết đã được tạo thành công", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Thông tin cây đã được tạo thành công", Toast.LENGTH_SHORT).show()
                 // Chuyển đến trang chủ sau khi tạo bài viết thành công
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
@@ -110,6 +114,7 @@ class AddNewSpeciesAction : AppCompatActivity() {
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Có lỗi xảy ra: ${e.message}", Toast.LENGTH_SHORT).show()
             }
+
     }
     private fun checkCameraPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
@@ -167,7 +172,7 @@ class AddNewSpeciesAction : AppCompatActivity() {
         db.collection("species").get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    val speciesName = document.getString("name") // Thay "name" bằng tên trường chứa tên của loài trong Firestore
+                    val speciesName = document.getString("name") //
                     speciesName?.let { speciesList.add(it) }
                 }
                 val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, speciesList)
@@ -183,7 +188,7 @@ class AddNewSpeciesAction : AppCompatActivity() {
         speciesSpinner = findViewById(R.id.speciesSpinner)
         img = findViewById(R.id.img)
         Description = findViewById(R.id.Description)
-        titleNews = findViewById(R.id.titleNews)
+        name = findViewById(R.id.name)
         btnAddNews = findViewById(R.id.btnAddNews)
     }
 }

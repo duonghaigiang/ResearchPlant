@@ -1,5 +1,6 @@
 package com.example.plant
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -20,6 +21,12 @@ class SpeciesAdapter(private val speciesList: List<Species>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val species = speciesList[position]
         holder.speciesName.text = species.speciesName
+        // Set the OnClickListener
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, SpeciesPlantAction::class.java)
+            intent.putExtra("speciesName", species.speciesName)
+            holder.itemView.context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {
