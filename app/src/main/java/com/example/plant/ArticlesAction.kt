@@ -36,7 +36,8 @@ class ArticlesAction : AppCompatActivity(), ArticleAdapter.OnArticleClickListene
                             val imageUrl = document.getString("imgURL") ?: ""
                             val createdAt = document.getTimestamp("createdAt") ?: Timestamp.now()
                             val avatar = userDocument.getString("photoURL") ?: ""
-                            val article = Article(avatar, author, title, description, imageUrl, createdAt  )
+                            val email = userDocument.getString("email") ?: ""
+                            val article = Article(avatar, author, email ,title, description, imageUrl, createdAt  )
                             articleList.add(article)
                             articleAdapter.notifyDataSetChanged()
                         }

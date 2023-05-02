@@ -5,6 +5,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
@@ -35,6 +37,10 @@ class SpeciesAction : AppCompatActivity() {
     }
 
     private fun fetchSpecies() {
+        val progressBar: ProgressBar = findViewById(R.id.progressBar)
+
+// Trước khi tải dữ liệu
+        progressBar.visibility = View.VISIBLE
         val db = FirebaseFirestore.getInstance()
         db.collection("species")
             .get()
@@ -45,9 +51,11 @@ class SpeciesAction : AppCompatActivity() {
                     speciesList.add(species)
                     speciesAdapter.notifyDataSetChanged()
                 }
+                progressBar.visibility = View.GONE
             }
             .addOnFailureListener { exception ->
                 Log.d("SpeciesAction", "Error fetching species: ", exception)
+                progressBar.visibility = View.GONE
             }
     }
 }

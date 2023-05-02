@@ -59,7 +59,7 @@
         <activity
             android:name=".SpeciesPlantAction"
             />
-
+        <activity android:name=".plantDetailAction"></activity>
     </application>
 
 </manifest>

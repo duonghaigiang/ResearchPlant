@@ -7,6 +7,7 @@ import com.google.firebase.Timestamp;
 data class Article(
     val avatar : String,
     val author: String,
+    val email : String,
     val title: String,
     val description: String,
     val imageUrl: String,

@@ -1,23 +1,18 @@
 package com.example.plant
-import android.content.Intent
+
 import android.os.Bundle
+import android.text.format.DateFormat
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import android.text.format.DateFormat
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
-class DetailArticle_Action  : AppCompatActivity() {
+class plantDetailAction  : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_article_detail)
-        val currentUser = Firebase.auth.currentUser
-
-        //mapping
-        val article = intent.getParcelableExtra<Article>("article")
+        setContentView(R.layout.activity_plant_detail_action)
+        val plant = intent.getParcelableExtra<plant>("plant")
 
         val imgAvatar: ImageView = findViewById(R.id.imgAvatar)
 
@@ -27,28 +22,18 @@ class DetailArticle_Action  : AppCompatActivity() {
         val descriptionTextView: TextView = findViewById(R.id.description)
         val authorTextView: TextView = findViewById(R.id.name)
         val timestampTextView: TextView = findViewById(R.id.date)
-
-
-
-
-        article?.let {
+        plant?.let {
             Glide.with(this)
-                .load(it.imageUrl)
+                .load(it.plantImage)
                 .into(imagePlant)
-            titleTextView.text = "Title : ${it.title}"
+            titleTextView.text = "Name : ${it.name}"
             descriptionTextView.text = "Descriptions : ${it.description}"
-            authorTextView.text = "Name : ${it.author}"
-            email.text = "Name : ${it.email}"
+            authorTextView.text = "Author : ${it.author}"
+            email.text = "Email : ${it.email}"
             timestampTextView.text = DateFormat.format("dd/MM/yyyy", it.createdAt.toDate())
             Glide.with(this)
-                .load(it.avatar)
+                .load(it.avartar)
                 .into(imgAvatar)
         }
     }
-
-    private fun mapping()
-    {
-
-    }
-
 }
