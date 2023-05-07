@@ -6,6 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class plant(
+    val id: String = "",
     val name: String ,
     val author : String,
     val description : String,
@@ -13,4 +14,7 @@ data class plant(
     val plantImage :String,
     val avartar : String,
     val email : String,
+    val species : String,
+    val likes: MutableList<String> = mutableListOf(),
+
     ): Parcelable

@@ -57,7 +57,9 @@ class SpeciesPlantAction : AppCompatActivity() , plantAdapter.OnPlantClickListen
                             val plantImage = document.getString("imgURL") ?: ""
                             val avartar =userDocument.getString("photoURL") ?: ""
                             val email =userDocument.getString("email") ?: ""
-                            val plant = plant(plantName, author, description, createdAt, plantImage , avartar , email)
+                            val species = document.getString("speciesId") ?: ""
+                            val plantId = document.id // Get the document ID
+                            val plant = plant(plantId, plantName, author, description, createdAt, plantImage, avartar, email , species) // Pass the document ID to the plant object
                             plantList.add(plant)
                             plantAdapter.notifyDataSetChanged()
                         }

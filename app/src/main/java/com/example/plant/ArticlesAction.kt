@@ -3,7 +3,9 @@ package com.example.plant
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +22,10 @@ class ArticlesAction : AppCompatActivity(), ArticleAdapter.OnArticleClickListene
     private lateinit var addnews: TextView
 
     private fun fetchArticles() {
+        val progressBar: ProgressBar = findViewById(R.id.progressBar)
+
+// Trước khi tải dữ liệu
+        progressBar.visibility = View.VISIBLE
         val db = FirebaseFirestore.getInstance()
         val auth = Firebase.auth
         db.collection("articles")
@@ -41,6 +47,8 @@ class ArticlesAction : AppCompatActivity(), ArticleAdapter.OnArticleClickListene
                             articleList.add(article)
                             articleAdapter.notifyDataSetChanged()
                         }
+                    // After data loaded
+                    progressBar.visibility = View.GONE
                 }
                 articleAdapter.notifyDataSetChanged()
             }

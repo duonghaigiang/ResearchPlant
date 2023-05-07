@@ -5,6 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import android.text.format.DateFormat
+import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.ktx.auth
@@ -20,7 +21,7 @@ class DetailArticle_Action  : AppCompatActivity() {
         val article = intent.getParcelableExtra<Article>("article")
 
         val imgAvatar: ImageView = findViewById(R.id.imgAvatar)
-
+        val btnHome: Button = findViewById(R.id.btnHome)
         val imagePlant: ImageView = findViewById(R.id.image)
         val titleTextView: TextView = findViewById(R.id.title)
         val email: TextView = findViewById(R.id.mail)
@@ -29,7 +30,9 @@ class DetailArticle_Action  : AppCompatActivity() {
         val timestampTextView: TextView = findViewById(R.id.date)
 
 
-
+        btnHome.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
 
         article?.let {
             Glide.with(this)
@@ -37,8 +40,8 @@ class DetailArticle_Action  : AppCompatActivity() {
                 .into(imagePlant)
             titleTextView.text = "Title : ${it.title}"
             descriptionTextView.text = "Descriptions : ${it.description}"
-            authorTextView.text = "Name : ${it.author}"
-            email.text = "Name : ${it.email}"
+            authorTextView.text = "Author : ${it.author}"
+            email.text = "Email : ${it.email}"
             timestampTextView.text = DateFormat.format("dd/MM/yyyy", it.createdAt.toDate())
             Glide.with(this)
                 .load(it.avatar)

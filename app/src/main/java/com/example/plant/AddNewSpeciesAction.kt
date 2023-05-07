@@ -191,4 +191,11 @@ class AddNewSpeciesAction : AppCompatActivity() {
         name = findViewById(R.id.name)
         btnAddNews = findViewById(R.id.btnAddNews)
     }
+    private fun updateLikeIcon(likeIcon: ImageButton, liked: Boolean) {
+        if (liked) {
+            likeIcon.setImageResource(R.drawable.liked_icon) // Replace with your own liked icon
+        } else {
+            likeIcon.setImageResource(R.drawable.like_icon) // Replace with your own unliked icon
+        }
+    }
 }
