@@ -26,6 +26,7 @@ class ArticlesAction : AppCompatActivity(), ArticleAdapter.OnArticleClickListene
 
 // Trước khi tải dữ liệu
         progressBar.visibility = View.VISIBLE
+
         val db = FirebaseFirestore.getInstance()
         val auth = Firebase.auth
         db.collection("articles")
@@ -43,7 +44,8 @@ class ArticlesAction : AppCompatActivity(), ArticleAdapter.OnArticleClickListene
                             val createdAt = document.getTimestamp("createdAt") ?: Timestamp.now()
                             val avatar = userDocument.getString("photoURL") ?: ""
                             val email = userDocument.getString("email") ?: ""
-                            val article = Article(avatar, author, email ,title, description, imageUrl, createdAt  )
+                            val id = document.id
+                            val article = Article(id, avatar, author, email ,title, description, imageUrl, createdAt  )
                             articleList.add(article)
                             articleAdapter.notifyDataSetChanged()
                         }

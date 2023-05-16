@@ -3,10 +3,12 @@ package com.example.plant
 import android.content.Intent
 import android.os.Bundle
 import android.text.format.DateFormat
+import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
 class plantDetailAction  : AppCompatActivity() {
@@ -38,49 +40,69 @@ class plantDetailAction  : AppCompatActivity() {
             Glide.with(this)
                 .load(it.avartar)
                 .into(imgAvatar)
+            updateLikeIcon(likeicon, it , FirebaseAuth.getInstance().currentUser?.uid)
 
-            updateLikeIcon(likeicon, it, FirebaseAuth.getInstance().currentUser?.uid)
+
         }
-
         likeicon.setOnClickListener {
             plant?.let { plant ->
                 toggleLike(plant, likeicon)
             }
         }
+
     }
     private fun toggleLike(plant: plant, likeicon: ImageButton) {
         val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
         currentUserId?.let { uid ->
-            if (plant.likes.contains(uid)) {
-                plant.likes.remove(uid)
+            val db = FirebaseFirestore.getInstance()
+            val plantRef = db.collection("plants").document(plant.id)
+
+            if (plant.likes?.contains(uid) == true) {
+                plantRef.update("likes", FieldValue.arrayRemove(uid)).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        plant.likes?.remove(uid)
+                        updateLikeIcon(likeicon, plant, uid)
+                    } else {
+                        Toast.makeText(this, "Failed to update like status: ${task.exception}", Toast.LENGTH_SHORT).show()
+                    }
+                }
             } else {
-                plant.likes.add(uid)
+                plantRef.update("likes", FieldValue.arrayUnion(uid)).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        plant.likes?.add(uid)
+                        updateLikeIcon(likeicon, plant, uid)
+                    } else {
+                        Toast.makeText(this, "Failed to update like status: ${task.exception}", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
-            updateLikeIcon(likeicon, plant, uid)
-            updatePlantLikesInFirestore(plant, plant.likes)
         }
     }
+
 
     private fun updateLikeIcon(likeIcon: ImageButton, plant: plant, currentUserId: String?) {
-        val liked = plant.likes.contains(currentUserId)
-        if (liked) {
-            likeIcon.setImageResource(R.drawable.liked_icon) // Replace with your own liked icon
-        } else {
-            likeIcon.setImageResource(R.drawable.like_icon) // Replace with your own unliked icon
-        }
-    }
-
-    private fun updatePlantLikesInFirestore(plant: plant, likes: MutableList<String>) {
         val db = FirebaseFirestore.getInstance()
         val plantRef = db.collection("plants").document(plant.id)
 
-        plantRef.update("likes", likes)
-            .addOnSuccessListener {
-                Toast.makeText(this, "Like status updated", Toast.LENGTH_SHORT).show()
+        plantRef.get().addOnSuccessListener { documentSnapshot ->
+            val fetchedPlant = documentSnapshot.toObject(plant::class.java)
+            fetchedPlant?.let {
+                val liked = it.likes?.contains(currentUserId) ?: false
+                if (liked) {
+                    likeIcon.setImageResource(R.drawable.liked_icon) // Replace with your own liked icon
+                } else {
+                    likeIcon.setImageResource(R.drawable.like_icon) // Replace with your own unliked icon
+                }
+                Log.d("updateLikeIcon", "Like icon updated successfully for plant: ${plant.id}")
             }
-            .addOnFailureListener { exception ->
-                Toast.makeText(this, "Failed to update like status: $exception", Toast.LENGTH_SHORT).show()
-            }
+        }.addOnFailureListener { exception ->
+            Toast.makeText(this, "Failed to fetch likes: $exception", Toast.LENGTH_SHORT).show()
+            Log.e("updateLikeIcon", "Failed to update like icon for plant: ${plant.id}", exception)
+        }
+
     }
+
+
+
 
 }
