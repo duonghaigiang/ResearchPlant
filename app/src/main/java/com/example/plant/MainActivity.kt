@@ -20,8 +20,13 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.example.plant.Species
 import android.util.Log
+import android.widget.ScrollView
+import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
 import org.checkerframework.checker.units.qual.A
+import java.util.*
+import java.text.SimpleDateFormat
+import com.google.firebase.firestore.Query
 
 class MainActivity : AppCompatActivity() {
     private lateinit var username : TextView
@@ -30,9 +35,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navView : NavigationView
     private lateinit var layoutspecies : LinearLayout
-
+    private lateinit var latestArticleTitle: TextView
+    private lateinit var latestArticleDescription: TextView
+    private lateinit var latestArticleImage: ImageView
+    private lateinit var latestArticleTimestamp: TextView
+    private lateinit var latestArticleAuthor: TextView
 
     private lateinit var layoutArticles : LinearLayout
+    private lateinit var scrollView3 : ScrollView
 
 
 
@@ -94,6 +104,12 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, ArticlesAction::class.java)
             startActivity(intent)
         }
+        fetchLatestArticle()
+        scrollView3.setOnClickListener {
+            val intent = Intent(this@MainActivity, ArticlesAction::class.java)
+            startActivity(intent)
+        }
+
 
     }
 
@@ -106,11 +122,51 @@ class MainActivity : AppCompatActivity() {
     }
     private fun mapping()
     {
+        scrollView3 = findViewById(R.id.scrollView3)
+        latestArticleTitle = findViewById(R.id.articleTitle)
+        latestArticleAuthor = findViewById(R.id.articleAuthor)
+        latestArticleDescription = findViewById(R.id.articleDescription)
+        latestArticleImage = findViewById(R.id.articleImage)
+        latestArticleTimestamp = findViewById(R.id.articleTimestamp)
         username = findViewById(R.id.username)
         layoutArticles = findViewById(R.id.layoutArticles)
         drawerLayout = findViewById(R.id.drawerLayout)
         navView = findViewById(R.id.nav_view)
         layoutspecies = findViewById(R.id.layoutspecies)
+    }
+    private fun fetchLatestArticle() {
+        val db = FirebaseFirestore.getInstance()
+        db.collection("articles")
+            .orderBy("createdAt", Query.Direction.DESCENDING)
+            .limit(1)
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    val title = document.getString("title") ?: ""
+                    val description = document.getString("description") ?: ""
+                    val imageUrl = document.getString("imgURL") ?: ""
+                    val createdAt = document.getTimestamp("createdAt")?.toDate()
+
+                    val authorId = document.getString("uid") ?: ""
+
+                    // fetch author details
+                    db.collection("users").document(authorId)
+                        .get()
+                        .addOnSuccessListener { userDocument ->
+                            val author = userDocument.getString("displayName") ?: ""
+                            latestArticleAuthor.text = "Tác Giả :" +author
+                        }
+                    latestArticleTitle.text = "Tiêu Đề :" +title
+                    latestArticleDescription.text = "Mô Tả :" +description
+                    Glide.with(this)
+                        .load(imageUrl)
+                        .into(latestArticleImage)
+                    if (createdAt != null) {
+                        val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                        latestArticleTimestamp.text = format.format(createdAt)
+                    }
+                }
+            }
     }
     private fun readFS(uid :String?,callback: (Map<String, Any>?) -> Unit)
     {

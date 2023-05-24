@@ -71,6 +71,25 @@ class ProfileActivity : AppCompatActivity() {
             getImageLauncher.launch(galleryIntent)
         }
         loadAvatarUrl(currentUser?.uid)
+        loadNumberOfArticles(currentUser?.uid)
+    }
+    private fun loadNumberOfArticles(uid: String?) {
+        val articlesCountView : TextView = findViewById(R.id.articlesCount) // replace this with the id of your TextView
+
+        if (uid != null) {
+            db.collection("articles")
+                .whereEqualTo("uid", uid)
+                .get()
+                .addOnSuccessListener { documents ->
+                    val count = documents.size()
+                    articlesCountView.text = "Số lượng bài viết bạn đã đăng:" +count.toString()
+                }
+                .addOnFailureListener { exception ->
+                    Toast.makeText(this, "Error getting documents: $exception", Toast.LENGTH_SHORT).show()
+                }
+        } else {
+            articlesCountView.text = "0"
+        }
     }
     private fun uploadAvatar(uri: Uri) {
         val currentUser = FirebaseAuth.getInstance().currentUser

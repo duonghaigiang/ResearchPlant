@@ -3,6 +3,7 @@ package com.example.plant
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.google.firebase.firestore.Query
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
@@ -30,6 +31,7 @@ class ArticlesAction : AppCompatActivity(), ArticleAdapter.OnArticleClickListene
         val db = FirebaseFirestore.getInstance()
         val auth = Firebase.auth
         db.collection("articles")
+            .orderBy("createdAt", Query.Direction.DESCENDING) // Sắp xếp theo thứ tự mới nhất
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
@@ -49,7 +51,7 @@ class ArticlesAction : AppCompatActivity(), ArticleAdapter.OnArticleClickListene
                             articleList.add(article)
                             articleAdapter.notifyDataSetChanged()
                         }
-                    // After data loaded
+                    // Sau khi dữ liệu đã được tải
                     progressBar.visibility = View.GONE
                 }
                 articleAdapter.notifyDataSetChanged()

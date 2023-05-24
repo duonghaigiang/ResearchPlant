@@ -42,18 +42,34 @@
                 android:textColor="@color/black"
                 android:textSize="18dp"></EditText>
 
-            <EditText
-                android:id="@+id/login_passWord"
+            <LinearLayout
+                android:id="@+id/passwordLayout"
                 android:layout_width="299dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="40dp"
                 android:background="@drawable/text_filed"
-                android:drawableLeft="@drawable/ic_baseline_lock_24"
-                android:hint="PassWord"
-                android:padding="8dp"
-                android:textColor="@color/black"
-                android:textSize="18dp"></EditText>
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <EditText
+                    android:id="@+id/login_passWord"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="Password"
+                    android:drawableLeft="@drawable/ic_baseline_lock_24"
+                    android:padding="0dp"
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
+                <ImageView
+                    android:id="@+id/passwordVisibility"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/ic_baseline_remove_red_eye_24" />
+            </LinearLayout>
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="60dp"

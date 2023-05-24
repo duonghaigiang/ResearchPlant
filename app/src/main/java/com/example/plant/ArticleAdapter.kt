@@ -18,7 +18,7 @@ import android.text.format.DateFormat
 class ArticleAdapter(private val articles: List<Article>,
                      private val context: Context ,
                      private val onArticleClickListener: OnArticleClickListener
-                     ) :
+) :
     RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
     interface OnArticleClickListener {
         fun onArticleClick(article: Article)
@@ -37,24 +37,24 @@ class ArticleAdapter(private val articles: List<Article>,
         return ArticleViewHolder(view)
     }
 
-
-    //Đặt sự kiện nhấp chuột cho itemView trong onBindViewHolder
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article = articles[position]
         holder.authorTextView.text = article.author
-            holder.titleTextView.text = article.title
-            holder.descriptionTextView.text = article.description
-            Glide.with(context)
-                .load(article.imageUrl)
-                .into(holder.imageView)
-            holder.timestampTextView.text = DateFormat.format("dd/MM/yyyy", article.createdAt.toDate())
+        holder.titleTextView.text = article.title
 
-            // sự kiện Click tại mỗi item
-            holder.itemView.setOnClickListener {
-                onArticleClickListener.onArticleClick(article)
+        // Hide the description
+        holder.descriptionTextView.visibility = View.GONE
+
+        Glide.with(context)
+            .load(article.imageUrl)
+            .into(holder.imageView)
+        holder.timestampTextView.text = DateFormat.format("dd/MM/yyyy", article.createdAt.toDate())
+
+        // Handle click event on each item
+        holder.itemView.setOnClickListener {
+            onArticleClickListener.onArticleClick(article)
         }
     }
-
 
     override fun getItemCount(): Int {
         return articles.size
