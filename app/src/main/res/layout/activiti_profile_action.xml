@@ -121,7 +121,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="40dp"
-            android:text="Thông Tin Email"
+            android:text="Email:"
             android:textColor="@color/lavender"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"

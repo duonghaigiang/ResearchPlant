@@ -15,6 +15,8 @@ class plantDetailAction  : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_plant_detail_action)
+
+        val NumLike: TextView = findViewById(R.id.NumLike)
         val likeicon: ImageButton = findViewById(R.id.likeicon)
         val plant = intent.getParcelableExtra<plant>("plant")
         val imgAvatar: ImageView = findViewById(R.id.imgAvatar)
@@ -41,9 +43,9 @@ class plantDetailAction  : AppCompatActivity() {
                 .load(it.avartar)
                 .into(imgAvatar)
             updateLikeIcon(likeicon, it , FirebaseAuth.getInstance().currentUser?.uid)
-
-
+            updateNumLikes(it, NumLike)
         }
+
         likeicon.setOnClickListener {
             plant?.let { plant ->
                 toggleLike(plant, likeicon)
@@ -100,6 +102,20 @@ class plantDetailAction  : AppCompatActivity() {
             Log.e("updateLikeIcon", "Failed to update like icon for plant: ${plant.id}", exception)
         }
 
+    }
+    private fun updateNumLikes(plant: plant, numLikesTextView: TextView) {
+        val db = FirebaseFirestore.getInstance()
+        val plantRef = db.collection("plants").document(plant.id)
+
+        plantRef.get().addOnSuccessListener { documentSnapshot ->
+            val fetchedArticle = documentSnapshot.toObject(Article::class.java)
+            fetchedArticle?.let {
+                val numOfLikes = it.likes?.size ?: 0
+                numLikesTextView.text = numOfLikes.toString()
+            }
+        }.addOnFailureListener { exception ->
+            Toast.makeText(this, "Failed to fetch likes: $exception", Toast.LENGTH_SHORT).show()
+        }
     }
 
 

@@ -82,7 +82,14 @@ class ProfileActivity : AppCompatActivity() {
                 .get()
                 .addOnSuccessListener { documents ->
                     val count = documents.size()
-                    articlesCountView.text = "Số lượng bài viết bạn đã đăng:" +count.toString()
+                   if(count == 0)
+                   {
+                       articlesCountView.text = "Bạn chưa có bài viết nào !"
+                   }
+                    else
+                   {
+                       articlesCountView.text = "Số lượng bài viết bạn đã đăng:" +count.toString()
+                   }
                 }
                 .addOnFailureListener { exception ->
                     Toast.makeText(this, "Error getting documents: $exception", Toast.LENGTH_SHORT).show()

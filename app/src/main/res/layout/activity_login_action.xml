@@ -40,7 +40,7 @@
                 android:hint="Email"
                 android:padding="8dp"
                 android:textColor="@color/black"
-                android:textSize="18dp"></EditText>
+                android:textSize="14dp"></EditText>
 
             <LinearLayout
                 android:id="@+id/passwordLayout"
@@ -50,6 +50,7 @@
                 android:layout_marginRight="40dp"
                 android:background="@drawable/text_filed"
                 android:orientation="horizontal"
+                android:textSize="14dp"
                 android:padding="8dp">
 
                 <EditText

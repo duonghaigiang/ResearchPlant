@@ -23,6 +23,7 @@ class DetailArticle_Action  : AppCompatActivity() {
 
 
         //mapping
+        val NumLike: TextView = findViewById(R.id.NumLike)
         val article = intent.getParcelableExtra<Article>("article")
         val likeicon: ImageButton = findViewById(R.id.likeicon)
         val imgAvatar: ImageView = findViewById(R.id.imgAvatar)
@@ -52,12 +53,14 @@ class DetailArticle_Action  : AppCompatActivity() {
                 .load(it.avatar)
                 .into(imgAvatar)
             updateLikeIcon(likeicon, it , FirebaseAuth.getInstance().currentUser?.uid)
+            updateNumLikes(it, NumLike)
         }
         likeicon.setOnClickListener {
             article?.let { article ->
                 toggleLike(article, likeicon)
             }
         }
+
     }
 
     private fun toggleLike(article: Article, likeicon: ImageButton) {
@@ -115,6 +118,20 @@ class DetailArticle_Action  : AppCompatActivity() {
             Log.e("updateLikeIcon", "Failed to update like icon for plant: ${article.id}", exception)
         }
 
+    }
+    private fun updateNumLikes(article: Article, numLikesTextView: TextView) {
+        val db = FirebaseFirestore.getInstance()
+        val plantRef = db.collection("articles").document(article.id)
+
+        plantRef.get().addOnSuccessListener { documentSnapshot ->
+            val fetchedArticle = documentSnapshot.toObject(Article::class.java)
+            fetchedArticle?.let {
+                val numOfLikes = it.likes?.size ?: 0
+                numLikesTextView.text = numOfLikes.toString()
+            }
+        }.addOnFailureListener { exception ->
+            Toast.makeText(this, "Failed to fetch likes: $exception", Toast.LENGTH_SHORT).show()
+        }
     }
 
 }
