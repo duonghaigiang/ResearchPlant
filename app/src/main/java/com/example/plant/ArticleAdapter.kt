@@ -21,7 +21,7 @@ class ArticleAdapter(private val articles: List<Article>,
 ) :
     RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
     interface OnArticleClickListener {
-        fun onArticleClick(article: Article)
+     fun onArticleClick(article: Article)
     }
     class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val authorTextView: TextView = itemView.findViewById(R.id.articleAuthor)

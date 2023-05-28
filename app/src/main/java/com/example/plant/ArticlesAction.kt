@@ -10,10 +10,15 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.ktx.Firebase
+
+
 
 class ArticlesAction : AppCompatActivity(), ArticleAdapter.OnArticleClickListener{
     private lateinit var articlesRecyclerView: RecyclerView
@@ -31,31 +36,35 @@ class ArticlesAction : AppCompatActivity(), ArticleAdapter.OnArticleClickListene
         val db = FirebaseFirestore.getInstance()
         val auth = Firebase.auth
         db.collection("articles")
-            .orderBy("createdAt", Query.Direction.DESCENDING) // Sắp xếp theo thứ tự mới nhất
+            .orderBy("createdAt", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { documents ->
+                val userFetchTasks = mutableListOf<Task<DocumentSnapshot>>()
+
                 for (document in documents) {
                     val uid = document.getString("uid") ?: ""
-                    db.collection("users").document(uid)
-                        .get()
-                        .addOnSuccessListener { userDocument ->
-                            val author = userDocument.getString("displayName") ?: ""
-                            val title = document.getString("title") ?: ""
-                            val description = document.getString("description") ?: ""
-                            val imageUrl = document.getString("imgURL") ?: ""
-                            val createdAt = document.getTimestamp("createdAt") ?: Timestamp.now()
-                            val avatar = userDocument.getString("photoURL") ?: ""
-                            val email = userDocument.getString("email") ?: ""
-                            val id = document.id
-                            val article = Article(id, avatar, author, email ,title, description, imageUrl, createdAt  )
-                            articleList.add(article)
-                            articleAdapter.notifyDataSetChanged()
-                        }
-                    // Sau khi dữ liệu đã được tải
+                    val userFetchTask = db.collection("users").document(uid).get()
+                    userFetchTasks.add(userFetchTask)
+
+                    userFetchTask.addOnSuccessListener { userDocument ->
+                        val author = userDocument.getString("displayName") ?: ""
+                        val title = document.getString("title") ?: ""
+                        val description = document.getString("description") ?: ""
+                        val imageUrl = document.getString("imgURL") ?: ""
+                        val createdAt = document.getTimestamp("createdAt") ?: Timestamp.now()
+                        val avatar = userDocument.getString("photoURL") ?: ""
+                        val email = userDocument.getString("email") ?: ""
+                        val id = document.id
+                        val article = Article(id, avatar, author, email, title, description, imageUrl, createdAt)
+                        articleList.add(article)
+                    }
+                }
+                Tasks.whenAllSuccess<DocumentSnapshot>(userFetchTasks).addOnSuccessListener {
+                    articleAdapter.notifyDataSetChanged()
                     progressBar.visibility = View.GONE
                 }
-                articleAdapter.notifyDataSetChanged()
             }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

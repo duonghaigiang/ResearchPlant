@@ -7,10 +7,6 @@ import android.view.Gravity
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -20,8 +16,12 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.example.plant.Species
 import android.util.Log
-import android.widget.ScrollView
+import android.widget.*
 import com.bumptech.glide.Glide
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.Tasks
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import org.checkerframework.checker.units.qual.A
 import java.util.*
@@ -40,12 +40,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var latestArticleImage: ImageView
     private lateinit var latestArticleTimestamp: TextView
     private lateinit var latestArticleAuthor: TextView
-
+    private lateinit var addNewsPlant : Button
     private lateinit var layoutArticles : LinearLayout
     private lateinit var scrollView3 : ScrollView
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -76,6 +73,11 @@ class MainActivity : AppCompatActivity() {
 //
 //        }
 
+        addNewsPlant.setOnClickListener {
+            val intent = Intent(this@MainActivity, AddNewSpeciesAction::class.java)
+            startActivity(intent)
+        }
+
         // toggle bar
         toggle = ActionBarDrawerToggle(this ,drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)
@@ -89,6 +91,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.nav_infor -> {
                     startActivity(Intent(this@MainActivity, ProfileActivity::class.java))
+
                 }
             }
             true
@@ -111,6 +114,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -120,8 +124,12 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
     private fun mapping()
     {
+
+        addNewsPlant = findViewById(R.id.addNewsPlant)
+
         scrollView3 = findViewById(R.id.scrollView3)
         latestArticleTitle = findViewById(R.id.articleTitle)
         latestArticleAuthor = findViewById(R.id.articleAuthor)
@@ -135,6 +143,8 @@ class MainActivity : AppCompatActivity() {
         layoutspecies = findViewById(R.id.layoutspecies)
     }
     private fun fetchLatestArticle() {
+        val progressBar: ProgressBar = findViewById(R.id.progressBar)
+        progressBar.visibility = View.VISIBLE
         val db = FirebaseFirestore.getInstance()
         db.collection("articles")
             .orderBy("createdAt", Query.Direction.DESCENDING)
@@ -154,10 +164,10 @@ class MainActivity : AppCompatActivity() {
                         .get()
                         .addOnSuccessListener { userDocument ->
                             val author = userDocument.getString("displayName") ?: ""
-                            latestArticleAuthor.text = "Tác Giả :" +author
+                            latestArticleAuthor.text = "Author :" +author
                         }
-                    latestArticleTitle.text = "Tiêu Đề :" +title
-                    latestArticleDescription.text = "Mô Tả :" +description
+                    latestArticleTitle.text = "Title :" +title
+                    latestArticleDescription.text = "Description :" +description
                     Glide.with(this)
                         .load(imageUrl)
                         .into(latestArticleImage)
@@ -166,6 +176,11 @@ class MainActivity : AppCompatActivity() {
                         latestArticleTimestamp.text = format.format(createdAt)
                     }
                 }
+                progressBar.visibility = View.GONE
+            }
+            .addOnFailureListener { exception ->
+                Log.d("SpeciesAction", "Error fetching species: ", exception)
+                progressBar.visibility = View.GONE
             }
     }
     private fun readFS(uid :String?,callback: (Map<String, Any>?) -> Unit)

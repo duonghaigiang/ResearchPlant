@@ -39,7 +39,7 @@ android {
 
 dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-parcelize-runtime:1.5.31' // Thay đổi phiên bản phù hợp với phiên bản Kotlin đang sử dụng
-
+    implementation 'com.google.android.gms:play-services-tasks:17.0.2' // check for the latest version
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
