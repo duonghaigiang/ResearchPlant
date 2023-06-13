@@ -49,10 +49,11 @@ class MainActivity : AppCompatActivity() {
 
         mapping()
 
+        // Lấy thông tin người dùng hiện tại từ FirebaseAuth
         val user = FirebaseAuth.getInstance()
-
         val currentUser = Firebase.auth.currentUser // viết tắt của kotlin
 
+        // Hiển thị tên người dùng hiện tại
         val currentUserTextView = username
         currentUser?.let {
             currentUserTextView.text = it.displayName
@@ -107,6 +108,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, ArticlesAction::class.java)
             startActivity(intent)
         }
+        // Lấy bài viết mới nhất
         fetchLatestArticle()
         scrollView3.setOnClickListener {
             val intent = Intent(this@MainActivity, ArticlesAction::class.java)
@@ -117,6 +119,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    // Phương thức xử lý khi chọn một item trong menu option
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(toggle.onOptionsItemSelected(item))
         {

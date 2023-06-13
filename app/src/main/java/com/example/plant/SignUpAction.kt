@@ -51,16 +51,22 @@ class SignUpAction : AppCompatActivity() {
         }
 
     }
+    fun isValidEmail(email: String): Boolean {
+        val emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$"
+        return email.matches(emailRegex.toRegex())
+    }
+    fun isValidPassword(password: String): Boolean {
+        val passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{11,}$"
+        return password.matches(passwordRegex.toRegex())
+    }
     private fun singUp()
     {
-
-
         val name = name.text.toString();
         var email = signUPEmail.text.toString();
         var password = signUpPassword.text.toString();
         var confirmPassword = confirmSignUpPassword.text.toString();
         if (name.isNotEmpty() &&email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty())  {
-            if(email.contains("@") && password.length > 0 && confirmPassword == password)
+            if(isValidEmail(email) && isValidPassword(password) && confirmPassword == password)
             {
                 firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
                     if (it.isSuccessful) {
